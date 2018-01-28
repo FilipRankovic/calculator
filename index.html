@@ -16,14 +16,19 @@
 
   <body>
 	<div id="main-container">
-		<input id="display" value=''>
-		</input>
-		<div id="wrapper">
+		<div>
+			<input id="saved" disabled/>
+		</div>
+		<div>
+			<input id="display" value="0" disabled/>
+		</div>
+		
+		<div>
 			<div id="buttons-container">
-				<button id="clear" class="buttons">C</button>
-				<button class="buttons">+/-</button>
-				<button class="buttons">%</button>
-				<button id="backspace" class="buttons">DEL</button>
+				<button class="buttons" id="clear">C</button>
+				<button class="buttons" id="plusminus">+/-</button>
+				<button class="buttons" id="percentage">%</button>
+				<button class="buttons" id="backspace">←</button>
 				<button class="buttons numbers">7</button>
 				<button class="buttons numbers">8</button>
 				<button class="buttons numbers">9</button>
@@ -37,8 +42,8 @@
 				<button class="buttons numbers">3</button>
 				<button class="buttons operators">-</button>
 				<button class="buttons numbers">0</button>
-				<button class="buttons">.</button>
-				<button id="equals" class="buttons">=</button>
+				<button class="buttons" id="point">.</button>
+				<button class="buttons" id="equals">=</button>
 				<button class="buttons operators">+</button>
 			</div>
 		</div>
