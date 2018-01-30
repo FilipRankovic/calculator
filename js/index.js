@@ -10,7 +10,7 @@ $(document).ready(function() {
 		if (display_value === 0) {
 			display_value = $(this).text();
 		} else {
-		display_value = display_value + $(this).text();
+		display_value += $(this).text();
 		}
 		updateDisplay();
   });
@@ -20,6 +20,7 @@ $(document).ready(function() {
 		first_value = 0;
 		operator = '';
 		main_string = '';
+		percentage = false;
 		updateDisplay();
 	});
 	
@@ -29,13 +30,11 @@ $(document).ready(function() {
 			main_string += display_value;
 			main_string += ' ' + operator + ' ';
 			display_value = 0;
-			//alert('yes');
 		} else {
 			operator = $(this).text();
 			main_string += display_value;
 			main_string += ' ' + operator + ' ';
 			display_value = 0;
-			//display_value = operate(operator, parseInt(first_value, 10), parseInt(display_value, 10));
 			first_value = 0;
 		}
 		updateDisplay();
@@ -45,7 +44,8 @@ $(document).ready(function() {
 		if (percentage == true) {
 			main_string += display_value;
 			display_value = percent(first_value, display_value);
-			percent == percentage;
+			//percent == percentage;
+			percentage = false;
 		} else {
 			main_string += display_value;
 			console.log(main_string);
@@ -75,20 +75,65 @@ $(document).ready(function() {
 	});
 	
 	$("#percentage").click(function() {
-		first_value = display_value;
-		main_string += display_value;
-		display_value = 0;
-		percentage = true;
-		main_string += ' % of ';
-		updateDisplay();
+		if (percentage == false) {
+			first_value = display_value;
+			main_string += display_value;
+			display_value = 0;
+			percentage = true;
+			main_string += ' % of ';
+			updateDisplay();
+		}
+	});
+	
+	window.addEventListener('keydown', function(e) {
+		var key = e.key;
+		console.log(key);
+		if (!isNaN(key)) {
+			if (display_value === 0) {
+				display_value = key;
+			} else {
+			display_value += key;
+			}
+			updateDisplay();
+		} else if (key == '.') {
+			display_value += '.';
+			updateDisplay();
+		} else if (key == '+' || key == '-' || key == '*' || key == '/') {
+			calculate2(key);
+			updateDisplay();
+		} else if (key == 'Enter') {			
+			if (percentage == true) {
+				main_string += display_value;
+				display_value = percent(first_value, display_value);
+				//percent == percentage;
+				percentage = false;
+			} else {
+				main_string += display_value;
+				console.log(main_string);
+				calculate(main_string);
+			}
+			updateDisplay();
+			main_string = '';
+							 
+		} else if (key == 'Backspace') {			
+			display_value = display_value.slice(0, -1);
+			if(display_value == '') display_value = 0;
+			updateDisplay();
+			
+		} else if (key == 'Delete') {
+			display_value = 0;
+			first_value = 0;
+			operator = '';
+			main_string = '';
+			percentage = false;
+			updateDisplay();							 
+		}
 	});
 	
 	function updateDisplay() {
 		document.getElementById("display").value = display_value;
 		document.getElementById("saved").value = main_string;
 	}
-	
-	
 
 	function add (a, b) {
 		return a + b;
@@ -141,6 +186,21 @@ $(document).ready(function() {
 
 		}
 
+	}
+	
+	function calculate2 (symbol) {
+		if (operator == '') {
+			operator = symbol;
+			main_string += display_value;
+			main_string += ' ' + operator + ' ';
+			display_value = 0;
+		} else {
+			operator = symbol;
+			main_string += display_value;
+			main_string += ' ' + operator + ' ';
+			display_value = 0;
+			first_value = 0;
+		}
 	}
 	
 });
